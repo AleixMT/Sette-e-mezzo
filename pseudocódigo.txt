@@ -1,0 +1,143 @@
+### pseudocodigo
+
+n = [0, 39]
+n / 10 = [0, 3] = [oros, espadas, copas, bastos]
+n % 10 = [0, 9] = [0 --> as, 1, --> 2, 2 --> 3, ..., 6 --> 7, 7 --> sota, 8 --> caballo, 9 --> rey]
+
+
+funció calcular_puntuacio_carta(carta: enter) retorna real
+{
+	si (carta % 10 < 7)
+	{
+	  retornar carta % 10 + 1
+	}
+	sino
+	{
+	  retornar 1 / 2
+	}
+
+}
+
+
+
+acció inicialitzar_baralla(baralla: taula d'enters)
+{
+	baralla_ordenada es taula enter[40]
+	per (enter i = 0; i < 40; i++)
+	{
+	 baralla_ordenada[i] = i;
+	}
+
+    enter num_cartes_afegides = 0;
+    enter marca = 45
+    mentre (num_cartes_afegides < 40)
+    {
+      index = rand() % 40
+      if (baralla_ordenada[index] == 45)
+      {
+        continue
+      }
+      else
+      {
+        baralla[num_cartes_afegides] = baralla_ordenada[index]
+        num_cartes_afegides++
+        baralla_ordenada[index] = 45
+      }
+    }
+}
+
+
+
+
+
+main
+{
+	baralla es taula enter[40]
+    num_cartas es enter = 40
+    torn_persona es booleà = true
+    passar_o_robar es booleà
+    puntuacio_temporal es real
+
+    score_persona es real = 0
+    score_ordinador es real = 0
+
+    inicialitzar_baralla(baralla)
+
+    fer
+    {
+
+      // persona
+      si (torn_persona)
+      {
+        escriure("Vols passar (0) o robar (1)?")
+        llegir(passar_o_robar)
+        // passar
+        si (passar_o_robar == 0)
+        {
+          torn_persona = ! torn_persona
+
+          continue
+        }
+        // robar
+        else
+        {
+          num_cartas--
+          puntuacio_temporal = calcular_puntuacio_carta(baralla[num_cartas])
+          escriure("La teva carta té %i", puntuacio_temporal)
+          score_persona += puntuacio_temporal
+          torn_persona = ! torn_persona
+          if (score_persona == 7.5)
+          {
+            escriure ("Has guanyat!")
+            sortir()
+          }
+          else if (scorre_persona > 7.5)
+          {
+            escriure ("Ha guanyat l'ordinador")
+            sortir()
+          }
+        }
+      }
+
+      // Ordinador
+      else
+      {
+        escriure("Vols passar (0) o robar (1)?")
+        si (rand() % 2 == 0)
+        {
+          torn_persona = ! torn_persona
+
+          continue
+        }
+        // robar
+        else
+        {
+          num_cartas--
+          puntuacio_temporal = calcular_puntuacio_carta(baralla[num_cartas])
+          escriure("La carta del ordinador té %i", puntuacio_temporal)
+          score_ordinador += puntuacio_temporal
+          torn_persona = ! torn_persona
+          if (score_ordinador == 7.5)
+          {
+            escriure ("Has perdut! L'ordinador arriba a 7 i mig")
+            sortir()
+          }
+          else if (score_ordinador > 7.5)
+          {
+            escriure ("L'ordinador s'ha passat de set i mig, has guanyat!")
+            sortir()
+          }
+        }
+      }
+    }
+    mentre(num_cartas > 0)
+
+    escriure ("s'han acabat les cartes, han guanyat els dos!")
+
+
+
+
+}
+
+
+
