@@ -28,6 +28,7 @@ acció inicialitzar_baralla(baralla: taula d'enters)
 	 baralla_ordenada[i] = i;
 	}
 
+
     enter num_cartes_afegides = 0;
     enter marca = 45
     mentre (num_cartes_afegides < 40)

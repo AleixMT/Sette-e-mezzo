@@ -1,5 +1,7 @@
-#include "setteemezzo.h"
-
+#include <stdio.h>
+#include <stdbool.h>  // To use booleans
+#include <stdlib.h>
+#include <time.h>
 
 /**
  * Create a list of number representing all the cards of the spanish deck sorted.
@@ -20,8 +22,11 @@ void initialize_deck(unsigned int * deck)
   	unsigned int index = rand() % 40;
   	if (cards[index] != 41)
   	{
+      // Guardo carta en baraja definitiva
   	  deck[added_num_cards] = cards[index];
+      // Guardo la marca para no volverla a usar
   	  cards[index] = 41;
+      // Me apunto una carta mas para acceder a la siguiente posicion en la siguiente iteracions
   	  added_num_cards++;
   	}
   	else
@@ -45,7 +50,6 @@ unsigned int get_scores_of_card_in_half_points(unsigned int card)
   {
     return 1;
   }
-   
 }
 
 
@@ -74,11 +78,13 @@ int main(int nargs, char* args[])
   unsigned int num_cards = 40;
   unsigned int computer_half_points = 0;
   unsigned int person_half_points = 0;
-  unsigned int card_score;
   bool person_turn = true;
+
   unsigned int decision;
+  unsigned int card_score;
 
   srand(time(NULL));
+
   initialize_deck(deck);
 
   do
@@ -86,7 +92,9 @@ int main(int nargs, char* args[])
     if (person_turn)
     {
       printf("\n\nTorn jugador. Què vols fer? Passar (0) o demanar (1)?");
-      while (scanf("%u", &decision) != 1) {}
+      
+      while (scanf("%i", &decision) != 1) {}
+
       if (decision)
       {
       	num_cards--;
@@ -116,7 +124,7 @@ int main(int nargs, char* args[])
       	printf("\nOrdinador demana.");
       	num_cards--;
       	card_score = get_scores_of_card_in_half_points(deck[num_cards]);
-      	printf("\nL'ordinador ha tret una carta amb %f punts de valor.", (float)card_score / 2);
+      	printf("\nL'ordinador ha tret una carta amb %.1f punts de valor.", (float)card_score / 2);
       	computer_half_points += card_score;
       	printf("\nL'ordinador porta %f punts.", (float) computer_half_points / 2);
       	if (computer_half_points == 15)
